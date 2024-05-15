@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Qriz</string>
+    <string name="login">login</string>
+    <string name="home">home</string>
+    <string name="test">test</string>
+    <string name="book">book</string>
+    <string name="myPage">myPage</string>
+
 </resources>
