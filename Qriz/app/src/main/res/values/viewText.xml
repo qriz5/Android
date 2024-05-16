@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="idTextField">아이디 혹은 이메일 주소를 입력해 주세요</string>
+    <string name="passwordTextField">비밀번호를 입력해 주세요</string>
+
+</resources>

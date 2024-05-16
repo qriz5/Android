@@ -77,4 +77,6 @@ dependencies {
 
     //Glide
     implementation ("com.github.skydoves:landscapist-glide:1.4.7")
+
+
 }
