@@ -1,25 +1,23 @@
 package com.example.qriz
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
-import com.example.qriz.ui.navigation.AppNavigation
 import com.example.qriz.ui.screen.LoginScreen
 import com.example.qriz.ui.theme.QrizTheme
+import com.example.qriz.viewModel.LoginViewModel
 
-class MainActivity : ComponentActivity() {
+class LoginActivity : ComponentActivity() {
+    private val loginViewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -29,28 +27,23 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                   MyApp()
+                    LoginScreen(viewModel = loginViewModel)
                 }
             }
         }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        loginViewModel.handleSignInResult(requestCode, resultCode, data)
+    }
 }
 
-@Composable
-fun MyApp() {
-    val navController = rememberNavController()
 
-
-
-    // 네비게이션 화면 표시
-    AppNavigation()
-
-}
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun GreetingPreview3() {
     QrizTheme {
-       MyApp()
+        LoginScreen(viewModel = LoginViewModel())
     }
 }

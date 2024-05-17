@@ -24,39 +24,39 @@ import com.example.qriz.ui.screen.MyPageScreen
 import com.example.qriz.ui.screen.TestScreen
 
 @Composable
-fun AppNavigation(isLoginIn: Boolean) {
+fun AppNavigation() {
     val navController: NavHostController = rememberNavController()
 
     Scaffold(
         bottomBar = {
-            if (isLoginIn) {
-                NavigationBar {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentDestination: NavDestination? = navBackStackEntry?.destination
 
-                    listOfNavItems.forEach { navItem ->
-                        NavigationBarItem(
-                            selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
-                            onClick = {
-                                navController.navigate(navItem.route) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
-                                    launchSingleTop = true
-                                    restoreState = true
+            NavigationBar {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination: NavDestination? = navBackStackEntry?.destination
+
+                listOfNavItems.forEach { navItem ->
+                    NavigationBarItem(
+                        selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
+                        onClick = {
+                            navController.navigate(navItem.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
                                 }
-                            },
-                            icon = { Icon(imageVector = navItem.icon, contentDescription = null) },
-                            label = {
-                                Text(text = navItem.label)
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                        )
-                    }
+                        },
+                        icon = { Icon(imageVector = navItem.icon, contentDescription = null) },
+                        label = {
+                            Text(text = navItem.label)
+                        }
+                    )
                 }
             }
+
         }
     ) { paddingValues ->
-        NavHost(navController = navController, startDestination = if(isLoginIn) Screens.HomeScreen.name else Screens.LoginScreen.name,
+        NavHost(navController = navController, startDestination = Screens.HomeScreen.name,
             modifier = Modifier.padding(paddingValues)) {
             composable(route = Screens.HomeScreen.name) {
                 HomeScreen()
@@ -66,9 +66,6 @@ fun AppNavigation(isLoginIn: Boolean) {
             }
             composable(route = Screens.BookScreen.name) {
                 BookScreen()
-            }
-            composable(route = Screens.LoginScreen.name) {
-                LoginScreen(onLoginSuccess = { })
             }
             composable(route = Screens.MyPageScreen.name) {
                 MyPageScreen()

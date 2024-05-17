@@ -5,8 +5,8 @@
     <string name="test">test</string>
     <string name="book">book</string>
     <string name="myPage">myPage</string>
-
-
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 
 </resources>

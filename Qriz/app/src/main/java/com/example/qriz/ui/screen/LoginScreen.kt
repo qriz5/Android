@@ -1,7 +1,9 @@
 package com.example.qriz.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +31,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,16 +58,24 @@ import com.example.qriz.ui.theme.appleNeo
 import com.example.qriz.ui.theme.loginButtonColor
 import com.example.qriz.ui.theme.textFieldColor
 import com.example.qriz.ui.theme.textFieldFontColor
+import com.example.qriz.viewModel.LoginViewModel
 import com.skydoves.landscapist.CircularRevealImage
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen( onLoginSuccess : () -> Unit){
+fun LoginScreen( viewModel: LoginViewModel){
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val idPlaceHolder = stringResource(id = R.string.idTextField)
     val passwordPlaceHolder = stringResource(id = R.string.passwordTextField)
+    val context = LocalContext.current
+    // Google SignIn 초기화
+
+    LaunchedEffect(Unit) {
+        viewModel.configureGoogleSignIn(context)
+    }
+
     Surface {
         Column(modifier = Modifier
             .fillMaxSize()
@@ -89,7 +102,7 @@ fun LoginScreen( onLoginSuccess : () -> Unit){
             Spacer(modifier = Modifier.height(16.dp))
 
             //loginButton
-            Button(onClick = {onLoginSuccess()}, colors = ButtonDefaults.buttonColors(
+            Button(onClick = {}, colors = ButtonDefaults.buttonColors(
                 containerColor = loginButtonColor,
                 contentColor = Color.White,
                 disabledContainerColor = loginButtonColor,
@@ -133,7 +146,9 @@ fun LoginScreen( onLoginSuccess : () -> Unit){
                     contentDescription = "카카오 로그인",
                     modifier = Modifier
                         .size(40.dp)
-                        .clip(CircleShape)
+                        .clip(CircleShape).clickable{
+                            Toast.makeText(context, "카카오 로그인", Toast.LENGTH_SHORT).show()
+                        }
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Image(
@@ -141,7 +156,9 @@ fun LoginScreen( onLoginSuccess : () -> Unit){
                     contentDescription = "구글 로그인",
                     modifier = Modifier
                         .size(36.dp)
-                        .clip(CircleShape)
+                        .clip(CircleShape).clickable {
+                            viewModel.googleSignIn(context)
+                        }
                 )
             }
         }
@@ -186,10 +203,6 @@ fun TextBox(
 @Composable
 fun GreetingPreview() {
     QrizTheme {
-       LoginScreen(onLoginSuccess = {
-           // 로그인 성공 시
-           // 로그인 상태를 변경
-
-       })
+       LoginScreen(viewModel = LoginViewModel())
     }
 }
