@@ -55,12 +55,24 @@ class LoginViewModel : ViewModel() {
     fun handleSignInResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == GoogleSignInHelper.RC_SIGN_IN) {
             googleSignInHelper.handleSignInResult(data) { result ->
-                result.onSuccess { idToken ->
-                    Log.d("GoogleLogin", "handleSignInResult: $idToken")
-                    sendTokenToServer(idToken)
+                result.onSuccess { authCode ->
+                    Log.d("GoogleLogin", "handleSignInResult: $authCode")
+                    sendAuthCodeToServer(authCode)
                 }.onFailure {
                     // Handle error
                 }
+            }
+        }
+    }
+
+    private fun sendAuthCodeToServer(authCode : String?){
+        viewModelScope.launch {
+            try {
+                val tokenRequest = SocialLoginRequest("google",authCode ?: "")
+                val response = RetrofitInstance.api.verifyToken(tokenRequest)
+            }
+            catch (e : Exception){
+
             }
         }
     }

@@ -3,6 +3,7 @@ package com.example.qriz.util.Helper
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.example.qriz.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,7 +23,8 @@ class GoogleSignInHelper(private val context: Context) {
 
     init {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestServerAuthCode(context.getString(R.string.default_web_client_id)) // 인증 코드 발급
+//            .requestIdToken(context.getString(R.string.default_web_client_id)) // 토큰 발급
             .requestEmail()
             .build()
 
@@ -38,7 +40,9 @@ class GoogleSignInHelper(private val context: Context) {
         val task = GoogleSignIn.getSignedInAccountFromIntent(data)
         try {
             val account = task.getResult(ApiException::class.java)!!
-            firebaseAuthWithGoogle(account.idToken!!, onResult)
+            Log.d("GOOGLE", "handleSignInResult: ${account.serverAuthCode}") // 인증코드 발급
+//            firebaseAuthWithGoogle(account.idToken!!, onResult) // 토큰 발급
+            onResult(Result.success(account.serverAuthCode!!))
         } catch (e: ApiException) {
             onResult(Result.failure(e))
         }
