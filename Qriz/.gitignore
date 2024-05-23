@@ -169,6 +169,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# KAKAO API
+.values/kakao_login.xml
+
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar

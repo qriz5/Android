@@ -1,5 +1,6 @@
 package com.example.qriz.ui.screen
 
+import android.app.Application
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -73,7 +74,7 @@ fun LoginScreen( viewModel: LoginViewModel){
     // Google SignIn 초기화
 
     LaunchedEffect(Unit) {
-        viewModel.configureGoogleSignIn(context)
+        viewModel.configureGoogleSignIn()
     }
 
     Surface {
@@ -148,6 +149,7 @@ fun LoginScreen( viewModel: LoginViewModel){
                         .size(40.dp)
                         .clip(CircleShape).clickable{
                             Toast.makeText(context, "카카오 로그인", Toast.LENGTH_SHORT).show()
+                            viewModel.kakaoLogin()
                         }
                 )
                 Spacer(modifier = Modifier.width(20.dp))
@@ -157,7 +159,7 @@ fun LoginScreen( viewModel: LoginViewModel){
                     modifier = Modifier
                         .size(36.dp)
                         .clip(CircleShape).clickable {
-                            viewModel.googleSignIn(context)
+                            viewModel.googleSignIn()
                         }
                 )
             }
@@ -203,6 +205,6 @@ fun TextBox(
 @Composable
 fun GreetingPreview() {
     QrizTheme {
-       LoginScreen(viewModel = LoginViewModel())
+       LoginScreen(viewModel = LoginViewModel(Application()))
     }
 }

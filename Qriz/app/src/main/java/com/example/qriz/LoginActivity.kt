@@ -1,5 +1,6 @@
 package com.example.qriz
 
+import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,6 +22,7 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             QrizTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -44,6 +46,6 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview3() {
     QrizTheme {
-        LoginScreen(viewModel = LoginViewModel())
+        LoginScreen(viewModel = LoginViewModel(Application()))
     }
 }

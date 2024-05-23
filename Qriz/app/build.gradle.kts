@@ -1,9 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
 
 }
+
+var properties = Properties()
+properties.load(FileInputStream("local.properties"))
 
 android {
     namespace = "com.example.qriz"
@@ -20,6 +27,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField("String", "KAKAO_APP_KEY", properties.getProperty("kakao_key"))
+        resValue("string", "kakao_oauth_host", properties.getProperty("kakao_oauth_host"))
     }
 
     buildTypes {
@@ -40,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -87,9 +97,9 @@ dependencies {
     //Google Play services
     implementation("com.google.gms:google-services:4.3.13")
     implementation("com.google.firebase:firebase-auth:22.2.0")
-
     implementation("com.google.android.gms:play-services-auth:21.1.1")
 
-
+    // 카카오 로그인
+    implementation ("com.kakao.sdk:v2-user:2.20.1")
 
 }
