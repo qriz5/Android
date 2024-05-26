@@ -1,6 +1,7 @@
 package com.example.qriz.ui.screen
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,7 +49,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bumptech.glide.load.engine.Resource
@@ -57,6 +61,7 @@ import com.example.qriz.R
 import com.example.qriz.ui.theme.QrizTheme
 import com.example.qriz.ui.theme.appleNeo
 import com.example.qriz.ui.theme.loginButtonColor
+import com.example.qriz.ui.theme.textColorGray
 import com.example.qriz.ui.theme.textFieldColor
 import com.example.qriz.ui.theme.textFieldFontColor
 import com.example.qriz.viewModel.LoginViewModel
@@ -97,23 +102,28 @@ fun LoginScreen( viewModel: LoginViewModel){
             TextBox(
                 hint = passwordPlaceHolder,
                 value = password,
-                onValueChange = { password = it }
+                onValueChange = { password = it },
+                true
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             //loginButton
-            Button(onClick = {}, colors = ButtonDefaults.buttonColors(
-                containerColor = loginButtonColor,
-                contentColor = Color.White,
-                disabledContainerColor = loginButtonColor,
-                disabledContentColor = Color.White
-            ),
+            Button(
+                onClick = {
+                          viewModel.login(id, password)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = loginButtonColor,
+                    contentColor = Color.White,
+                    disabledContainerColor = loginButtonColor,
+                    disabledContentColor = Color.White
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(54.dp),
                 shape = RoundedCornerShape(8.dp),
-                ) {
+            ) {
                 Text("로그인", fontFamily = appleNeo, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
 
@@ -127,7 +137,7 @@ fun LoginScreen( viewModel: LoginViewModel){
                         .weight(1f)
                         .padding(start = 16.dp)
                 )
-                Text("다른 방법으로 로그인하기", fontFamily = appleNeo, color = textFieldFontColor,
+                Text("다른 방법으로 로그인하기", fontFamily = appleNeo, color = textColorGray,
                     modifier = Modifier.padding(horizontal = 16.dp))
                 Divider(
                     color = textFieldFontColor,
@@ -138,7 +148,7 @@ fun LoginScreen( viewModel: LoginViewModel){
             }
             
             Spacer(modifier = Modifier.height(24.dp))
-            // 로그인 버튼  
+            // 소셜 로그인 버튼
             Row(modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center){
@@ -147,8 +157,11 @@ fun LoginScreen( viewModel: LoginViewModel){
                     contentDescription = "카카오 로그인",
                     modifier = Modifier
                         .size(40.dp)
-                        .clip(CircleShape).clickable{
-                            Toast.makeText(context, "카카오 로그인", Toast.LENGTH_SHORT).show()
+                        .clip(CircleShape)
+                        .clickable {
+                            Toast
+                                .makeText(context, "카카오 로그인", Toast.LENGTH_SHORT)
+                                .show()
                             viewModel.kakaoLogin()
                         }
                 )
@@ -158,10 +171,35 @@ fun LoginScreen( viewModel: LoginViewModel){
                     contentDescription = "구글 로그인",
                     modifier = Modifier
                         .size(36.dp)
-                        .clip(CircleShape).clickable {
+                        .clip(CircleShape)
+                        .clickable {
                             viewModel.googleSignIn()
                         }
                 )
+            }
+
+            Spacer(modifier = Modifier.height(48.dp))
+
+            // 회원가입, 아이디 찾기, 비밀번호 찾기
+            Row(modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center){
+
+                Text(text = "회원가입",fontFamily = appleNeo, color = textColorGray,  modifier = Modifier.clickable {
+
+                })
+                Spacer(modifier = Modifier.width(4.dp))
+                VerticalDivider()
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "아이디 찾기",fontFamily = appleNeo, color = textColorGray, modifier = Modifier.clickable {
+
+                })
+                Spacer(modifier = Modifier.width(4.dp))
+                VerticalDivider()
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(text = "비밀번호 찾기",fontFamily = appleNeo, color = textColorGray, modifier = Modifier.clickable {
+
+                })
             }
         }
 
@@ -171,7 +209,8 @@ fun LoginScreen( viewModel: LoginViewModel){
 fun TextBox(
     hint: String,
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    isPassword : Boolean = false
 ) {
     Box(
         modifier = Modifier
@@ -195,7 +234,9 @@ fun TextBox(
                 onValueChange = onValueChange,
                 singleLine = true,
                 textStyle = TextStyle(color = Color.Black),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+
             )
         }
     }
@@ -207,4 +248,18 @@ fun GreetingPreview() {
     QrizTheme {
        LoginScreen(viewModel = LoginViewModel(Application()))
     }
+}
+
+@Composable
+fun VerticalDivider(
+    color: Color = textColorGray,
+    thickness: Dp = 1.dp,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier
+            .width(thickness)
+            .height(13.dp)
+            .background(color = color)
+    )
 }

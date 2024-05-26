@@ -35,13 +35,13 @@ val Typography = Typography(
 
 )
 val appleNeo = FontFamily(
-    Font(R.font.apple_sd_gothic_neo_eb),
-    Font(R.font.apple_sd_gothic_neo_b),
-    Font(R.font.apple_sd_gothic_neo_h),
-    Font(R.font.apple_sd_gothic_neo_l),
-    Font(R.font.apple_sd_gothic_neo_m),
-    Font(R.font.apple_sd_gothic_neo_r),
-    Font(R.font.apple_sd_gothic_neo_sb),
-    Font(R.font.apple_sd_gothic_neo_t),
-    Font(R.font.apple_sd_gothic_neo_ul),
+    Font(R.font.apple_sd_gothic_neo_eb, FontWeight.ExtraBold),
+    Font(R.font.apple_sd_gothic_neo_b, FontWeight.Bold),
+    Font(R.font.apple_sd_gothic_neo_h, FontWeight.SemiBold),
+    Font(R.font.apple_sd_gothic_neo_l, FontWeight.Light),
+    Font(R.font.apple_sd_gothic_neo_m, FontWeight.Medium),
+    Font(R.font.apple_sd_gothic_neo_r, FontWeight.Normal),
+    Font(R.font.apple_sd_gothic_neo_sb, FontWeight.SemiBold),
+    Font(R.font.apple_sd_gothic_neo_t, FontWeight.Thin),
+//    Font(R.font.apple_sd_gothic_neo_ul, FontWeight.)
 )

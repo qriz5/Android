@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -49,6 +50,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     private val context = application.applicationContext
     fun trySignin(context : Context){
+
+    }
+
+    fun login(id : String, pass : String){
 
     }
 
