@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.qriz.MainActivity
 import com.example.qriz.R
 import com.example.qriz.model.SocialLoginRequest
 import com.example.qriz.repository.RetrofitInstance
@@ -41,12 +42,16 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         val isLoading: Boolean = false
     )
 
-    private val _uiState = MutableStateFlow(LoginUiState())
-    val uiState: StateFlow<LoginUiState> = _uiState
+
     private lateinit var googleSignInHelper: GoogleSignInHelper
 
-    private val _loginResult = MutableSharedFlow<Boolean>()
-    var loginResult = _loginResult.asSharedFlow()
+    private val _loginResult = MutableStateFlow(false)
+    val loginResult : StateFlow<Boolean> = _loginResult
+    fun handleLoginSuccess(context: Context) {
+        val intent = Intent(context, MainActivity::class.java)
+        context.startActivity(intent)
+    }
+
 
     private val context = application.applicationContext
     fun trySignin(context : Context){

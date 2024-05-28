@@ -13,9 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.example.qriz.ui.screen.LoginScreen
 import com.example.qriz.ui.theme.QrizTheme
 import com.example.qriz.viewModel.LoginViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.observeOn
+import kotlinx.coroutines.launch
 
 class LoginActivity : ComponentActivity() {
     private val loginViewModel: LoginViewModel by viewModels()
@@ -30,6 +34,13 @@ class LoginActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     LoginScreen(viewModel = loginViewModel)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            loginViewModel.loginResult.collectLatest {
+                if(it){
+                    loginViewModel.handleLoginSuccess(this@LoginActivity)
                 }
             }
         }
