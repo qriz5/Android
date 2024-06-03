@@ -1,7 +1,6 @@
-package com.example.qriz.ui.navigation
+package com.example.qriz.ui.navigation.main
 
 enum class Screens {
-    LoginScreen,
     HomeScreen,
     TestScreen,
     BookScreen,

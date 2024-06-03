@@ -2,5 +2,6 @@
 <resources>
     <string name="idTextField">아이디 혹은 이메일 주소를 입력해 주세요</string>
     <string name="passwordTextField">비밀번호를 입력해 주세요</string>
+    <string name="nameTextField">이름을 입력</string>
 
 </resources>

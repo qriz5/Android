@@ -1,4 +1,4 @@
-package com.example.qriz.ui.navigation
+package com.example.qriz.ui.navigation.main
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle

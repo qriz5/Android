@@ -1,4 +1,4 @@
-package com.example.qriz.ui.navigation
+package com.example.qriz.ui.navigation.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -17,11 +17,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.qriz.ui.screen.BookScreen
-import com.example.qriz.ui.screen.HomeScreen
-import com.example.qriz.ui.screen.LoginScreen
-import com.example.qriz.ui.screen.MyPageScreen
-import com.example.qriz.ui.screen.TestScreen
+import com.example.qriz.ui.screen.Main.BookScreen
+import com.example.qriz.ui.screen.Main.HomeScreen
+import com.example.qriz.ui.screen.Main.MyPageScreen
+import com.example.qriz.ui.screen.Main.TestScreen
 
 @Composable
 fun AppNavigation() {

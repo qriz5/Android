@@ -1,7 +1,5 @@
-package com.example.qriz.ui.screen
+package com.example.qriz.ui.screen.Login
 
-import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,19 +19,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,38 +35,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.bumptech.glide.load.engine.Resource
-import com.example.qriz.MyApp
+import androidx.navigation.NavController
 import com.example.qriz.R
-import com.example.qriz.ui.theme.QrizTheme
+import com.example.qriz.ui.screen.component.TextBox
 import com.example.qriz.ui.theme.appleNeo
 import com.example.qriz.ui.theme.loginButtonColor
 import com.example.qriz.ui.theme.textColorGray
 import com.example.qriz.ui.theme.textFieldColor
 import com.example.qriz.ui.theme.textFieldFontColor
 import com.example.qriz.viewModel.LoginViewModel
-import com.skydoves.landscapist.CircularRevealImage
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen( viewModel: LoginViewModel){
+fun LoginScreen(navController: NavController, viewModel: LoginViewModel){
     var id by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val idPlaceHolder = stringResource(id = R.string.idTextField)
     val passwordPlaceHolder = stringResource(id = R.string.passwordTextField)
     val context = LocalContext.current
+
     // Google SignIn 초기화
 
     LaunchedEffect(Unit) {
@@ -93,6 +81,11 @@ fun LoginScreen( viewModel: LoginViewModel){
             Spacer(modifier = Modifier.height(32.dp))
 
             TextBox(
+                Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
+                innerBoxModifier = Modifier.padding(16.dp),
                 hint = idPlaceHolder,
                 value = id,
                 onValueChange = { id = it }
@@ -100,6 +93,11 @@ fun LoginScreen( viewModel: LoginViewModel){
             Spacer(modifier = Modifier.height(12.dp))
             //PassWord
             TextBox(
+                Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
+                innerBoxModifier = Modifier.padding(16.dp),
                 hint = passwordPlaceHolder,
                 value = password,
                 onValueChange = { password = it },
@@ -186,69 +184,34 @@ fun LoginScreen( viewModel: LoginViewModel){
                 horizontalArrangement = Arrangement.Center){
 
                 Text(text = "회원가입",fontFamily = appleNeo, color = textColorGray,  modifier = Modifier.clickable {
-
+                    navController.navigate("join")
                 })
                 Spacer(modifier = Modifier.width(4.dp))
                 VerticalDivider()
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(text = "아이디 찾기",fontFamily = appleNeo, color = textColorGray, modifier = Modifier.clickable {
-
+                    navController.navigate("searchID")
                 })
                 Spacer(modifier = Modifier.width(4.dp))
                 VerticalDivider()
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(text = "비밀번호 찾기",fontFamily = appleNeo, color = textColorGray, modifier = Modifier.clickable {
-
+                    navController.navigate("searchPass")
                 })
             }
         }
 
     }
 }
-@Composable
-fun TextBox(
-    hint: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    isPassword : Boolean = false
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp)
-            .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
-        contentAlignment = Alignment.Center
-    ) {
-        Box(modifier = Modifier.padding(16.dp),
-            contentAlignment = Alignment.CenterStart
-            ) {
-            if (value.isEmpty()) {
-                Text(
-                    text = hint,
-                    color = textFieldFontColor,
-                )
-            }
 
-            BasicTextField(
-                value = value,
-                onValueChange = onValueChange,
-                singleLine = true,
-                textStyle = TextStyle(color = Color.Black),
-                modifier = Modifier.fillMaxWidth(),
-                visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
 
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    QrizTheme {
-       LoginScreen(viewModel = LoginViewModel(Application()))
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    QrizTheme {
+//       LoginScreen(viewModel = LoginViewModel( Application()))
+//    }
+//}
 
 @Composable
 fun VerticalDivider(

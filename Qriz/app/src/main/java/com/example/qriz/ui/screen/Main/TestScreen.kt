@@ -1,4 +1,4 @@
-package com.example.qriz.ui.screen
+package com.example.qriz.ui.screen.Main
 
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
