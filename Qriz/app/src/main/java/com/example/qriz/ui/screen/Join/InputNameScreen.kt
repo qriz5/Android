@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -47,9 +48,10 @@ import com.example.qriz.ui.theme.textFieldColor
 import com.example.qriz.ui.theme.textFieldFontColor
 import com.example.qriz.viewModel.LoginViewModel
 
-@Composable
-fun InputNameScreen(navController: NavController,  parentNavController: NavController, viewModel : LoginViewModel){
+import androidx.compose.foundation.layout.imePadding
 
+@Composable
+fun InputNameScreen(navController: NavController, parentNavController: NavController, viewModel: LoginViewModel) {
     var name by remember { mutableStateOf("") }
     val namePlaceHolder = stringResource(id = R.string.nameTextField)
     BackHandler {
@@ -57,8 +59,13 @@ fun InputNameScreen(navController: NavController,  parentNavController: NavContr
     }
 
     Surface {
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-            Column(modifier = Modifier.weight(1f)){
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .imePadding() // 키보드가 보일 때 패딩 추가
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -83,9 +90,8 @@ fun InputNameScreen(navController: NavController,  parentNavController: NavContr
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("가입을 위해 실명을 입력해주세요.", fontWeight = FontWeight.Medium, fontSize = 16.sp)
                 Spacer(modifier = Modifier.height(32.dp))
-                LimitedTextBox(hint = namePlaceHolder, value = name, onValueChange = {name = it}, maxLength = 4)
+                LimitedTextBox(hint = namePlaceHolder, value = name, onValueChange = { name = it }, maxLength = 4)
                 Text(text = "${name.length}/4")
-
             }
             Button(
                 onClick = { navController.navigate("InputEmail") },
@@ -100,21 +106,17 @@ fun InputNameScreen(navController: NavController,  parentNavController: NavContr
             ) {
                 Text("다음")
             }
-
         }
-
-
     }
 }
 
 @Composable
-fun BackButton(onBack: () -> Unit){
-
-    Image(painter = painterResource(id = R.drawable.baseline_square_24) , contentDescription = "back", modifier = Modifier.clickable {
-        onBack()
-    })
-
+fun BackButton(onBack: () -> Unit) {
+    Image(
+        painter = painterResource(id = R.drawable.baseline_square_24),
+        contentDescription = "back",
+        modifier = Modifier.clickable {
+            onBack()
+        }
+    )
 }
-
-
-

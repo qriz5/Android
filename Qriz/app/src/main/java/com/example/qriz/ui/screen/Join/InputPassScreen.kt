@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -45,7 +46,7 @@ fun InputPassScreen(navController: NavController, parentNavController: NavContro
     Surface {
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)) {
+            .padding(16.dp).imePadding()) {
             Column(modifier = Modifier.weight(1f)) {
                 JoinTopLayer(navController = navController,
                     title = "회원가입",

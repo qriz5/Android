@@ -3,6 +3,7 @@ package com.example.qriz.ui.screen.component
 import android.health.connect.datatypes.units.Length
 import android.sax.TextElementListener
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.qriz.ui.theme.textFieldColor
 import com.example.qriz.ui.theme.textFieldFontColor
 
@@ -72,7 +74,7 @@ fun LimitedTextBox(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(44.dp)
+            .height(48.dp)
             .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
         contentAlignment = Alignment.Center
     ) {
@@ -109,49 +111,37 @@ fun EmailTextBox(
     value: String,
     onValueChange: (String) -> Unit,
     isPassword : Boolean = false,
-    onClickButton : () -> Unit,
 ) {
-    Row {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .height(44.dp)
-                .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
-            contentAlignment = Alignment.Center
+
+    Box(
+        modifier = Modifier
+            .height(48.dp)
+            .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(modifier = Modifier.padding(start = 16.dp),
+            contentAlignment = Alignment.CenterStart
         ) {
-            Box(modifier = Modifier.padding(start = 16.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
-                if (value.isEmpty()) {
-                    Text(
-                        text = hint,
-                        color = textFieldFontColor,
-                    )
-                }
-
-                BasicTextField(
-                    value = value,
-                    onValueChange = onValueChange,
-                    singleLine = true,
-                    textStyle = TextStyle(color = Color.Black),
-                    modifier = Modifier.fillMaxWidth(),
-                    visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-
-                    )
+            if (value.isEmpty()) {
+                Text(
+                    text = hint,
+                    color = textFieldFontColor,
+                )
             }
-        }
-        Spacer(modifier = Modifier.weight(0.1f))
-        Button(modifier = Modifier
-            .weight(0.5f)
-            .height(44.dp),
-            colors = ButtonDefaults.buttonColors(
-                 if (value.isNotEmpty()) Color.Black else textFieldFontColor,
-            ),
-            shape = RoundedCornerShape(12.dp),
-            onClick = {onClickButton ()}) {
-            Text(text = "인증")
+            BasicTextField(
+                value = value,
+                onValueChange = onValueChange,
+                singleLine = true,
+                textStyle = TextStyle(color = Color.Black),
+                modifier = Modifier.fillMaxWidth(),
+                visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+
+                )
         }
     }
+
+
+
 
 }
 
@@ -168,7 +158,7 @@ fun IdTextBox(
         Box(
             modifier = Modifier
                 .weight(1f)
-                .height(44.dp)
+                .height(48.dp)
                 .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
             contentAlignment = Alignment.Center
         ) {
@@ -211,4 +201,60 @@ fun IdTextBox(
     }
 
 }
+
+
+
+@Composable
+fun TimerTextBox(
+    hint: String,
+    value: String,
+    onValueChange: (String) -> Unit,
+    isPassword: Boolean = false,
+    maxLength: Int,
+    timer: Long,
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .background(color = textFieldColor, shape = RoundedCornerShape(12.dp)),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            modifier = Modifier.padding(start = 16.dp),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            if (value.isEmpty()) {
+                Text(
+                    text = hint,
+                    color = textFieldFontColor,
+                )
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                BasicTextField(
+                    value = value,
+                    onValueChange = { newValue ->
+                        val truncatedValue = newValue.take(maxLength)
+                        onValueChange(truncatedValue)
+                    },
+                    singleLine = true,
+                    textStyle = TextStyle(color = Color.Black),
+                    modifier = Modifier.weight(1f),
+                    visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+                )
+
+                Text(
+                    text = String.format("%d:%02d", timer / 60, timer % 60),
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                    modifier = Modifier.align(Alignment.CenterVertically).padding(end = 16.dp)
+                )
+            }
+        }
+    }
+}
+
 
