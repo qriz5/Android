@@ -1,6 +1,7 @@
 package com.example.qriz.ui.screen.Join
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.qriz.ui.screen.component.EmailTextBox
@@ -29,6 +31,7 @@ import com.example.qriz.ui.screen.component.JoinTopLayer
 import com.example.qriz.ui.screen.component.LimitedTextBox
 import com.example.qriz.ui.screen.component.TextBox
 import com.example.qriz.ui.screen.component.TimerTextBox
+import com.example.qriz.ui.theme.appleNeo
 import com.example.qriz.ui.theme.textFieldColor
 import com.example.qriz.ui.theme.textFieldFontColor
 import com.example.qriz.viewModel.LoginViewModel
@@ -66,7 +69,13 @@ fun CheckEmailScreen(navController: NavController, viewModel : LoginViewModel){
                     maxLength = 4,
                     timer = timer)
                 if(authError) Text(text = "인증번호가 다르게 입력되었어요")
+                Spacer(modifier = Modifier.height(24.dp))
+                Text(text = "인증번호 다시 받기",
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = appleNeo,
+                    modifier = Modifier.clickable{
 
+                    }.align(Alignment.CenterHorizontally))
             }
 
 

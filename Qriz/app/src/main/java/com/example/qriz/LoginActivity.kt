@@ -39,7 +39,7 @@ class LoginActivity : ComponentActivity() {
                         composable("login") { LoginScreen(navController = navController, viewModel = loginViewModel) }
                         composable("join") {  JoinScreen(navController = navController, viewModel = loginViewModel) }
                         composable("searchID") { SearchIdScreen(navController = navController, viewModel = loginViewModel) }
-                        composable("searchPass") { SearchPassScreen(viewModel = loginViewModel) }
+                        composable("searchPass") { SearchPassScreen(navController = navController,viewModel = loginViewModel) }
                     }
                 }
             }
