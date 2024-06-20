@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.qriz.ui.screen.Join.BackButton
+import com.example.qriz.ui.screen.component.ConfirmDialog
 import com.example.qriz.ui.screen.component.TextBox
 import com.example.qriz.ui.theme.textFieldColor
 import com.example.qriz.ui.theme.textFieldFontColor
@@ -36,7 +37,9 @@ import com.example.qriz.viewModel.LoginViewModel
 fun SearchPassScreen(navController : NavController, viewModel : LoginViewModel){
     var email by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf(false) }
-
+    var dialogState by remember {
+        mutableStateOf(false)
+    }
     BackHandler {
         navController.popBackStack("login", false)
     }
@@ -80,7 +83,7 @@ fun SearchPassScreen(navController : NavController, viewModel : LoginViewModel){
                 if(emailError) Text(text = "이메일을 정확하게 입력해주세요", fontWeight = FontWeight.Medium, fontSize = 12.sp)
             }
             Button(
-                onClick = {  },
+                onClick = { dialogState = true },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(54.dp)
@@ -94,5 +97,12 @@ fun SearchPassScreen(navController : NavController, viewModel : LoginViewModel){
                 Text("이메일 발송")
             }
         }
+        if(dialogState) ConfirmDialog(
+            title = "이메일 발송 완료!",
+            description = "입력해주신 이메일 주소로 \n 비밀번호가 발송되었습니다. \n 메일함을 확인해주세요",
+            onClickCancel = {
+                dialogState = false
+            }
+        )
     }
 }

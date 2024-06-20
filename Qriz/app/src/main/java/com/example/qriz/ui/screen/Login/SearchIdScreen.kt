@@ -98,9 +98,13 @@ fun SearchIdScreen(navController : NavController, viewModel : LoginViewModel){
                 Text("이메일 발송")
             }
         }
-        
-        if(dialogState) ConfirmDialog(title = "이메일 발송 완료!", description = "입력해주신 이메일 주소로 \n 아이디가 발송되었습니다. \n 메일함을 확인해주세요") {
-            
-        }
+
+        if(dialogState) ConfirmDialog(
+            title = "이메일 발송 완료!",
+            description = "입력해주신 이메일 주소로 \n 아이디가 발송되었습니다. \n 메일함을 확인해주세요",
+            onClickCancel = {
+                dialogState = false
+            }
+        )
     }
 }
