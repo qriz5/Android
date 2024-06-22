@@ -1,5 +1,6 @@
 package com.example.qriz.ui.screen.Onboarding
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,14 +20,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.qriz.model.OnBoardingCategory
 import com.example.qriz.ui.items.OnBoardingItem
+import com.example.qriz.ui.navigation.main.Screens
 import com.example.qriz.ui.screen.component.CustomButton
 import com.example.qriz.ui.theme.QrizTheme
 import com.example.qriz.ui.theme.appleNeo
 
 @Composable
-fun OnBoarding(){
+fun OnBoarding(navController : NavController){
 
     val items = remember {
         mutableStateListOf(
@@ -60,7 +63,7 @@ fun OnBoarding(){
                 })
 
             }
-            CustomButton(onClick = { /*TODO*/ }, text = "선택완료")
+            CustomButton(onClick = { navController.navigate(route = Screens.OnBoardingFinish.name) }, text = "선택완료")
             Spacer(modifier = Modifier.height(40.dp))
         }
     }
@@ -81,6 +84,6 @@ fun CategoryList(
 @Composable
 fun OnBoardingPreview() {
     QrizTheme {
-        OnBoarding()
+        OnBoarding(NavController(Application()))
     }
 }

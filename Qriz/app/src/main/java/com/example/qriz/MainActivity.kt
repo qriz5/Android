@@ -1,8 +1,10 @@
 package com.example.qriz
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -12,8 +14,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.qriz.ui.navigation.main.AppNavigation
 import com.example.qriz.ui.theme.QrizTheme
+import com.example.qriz.viewModel.MainActivityViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel  : MainActivityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -23,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                   MyApp()
+                   MyApp(mainViewModel)
                 }
             }
         }
@@ -31,13 +36,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp() {
+fun MyApp(viewModel: MainActivityViewModel) {
     val navController = rememberNavController()
 
 
 
     // 네비게이션 화면 표시
-    AppNavigation()
+    AppNavigation(viewModel)
 
 }
 
@@ -45,6 +50,6 @@ fun MyApp() {
 @Composable
 fun GreetingPreview() {
     QrizTheme {
-       MyApp()
+       MyApp(viewModel = MainActivityViewModel(Application()) )
     }
 }

@@ -4,5 +4,8 @@ enum class Screens {
     HomeScreen,
     TestScreen,
     BookScreen,
-    MyPageScreen
+    MyPageScreen,
+    OnBoardingStart,
+    OnBoarding,
+    OnBoardingFinish,
 }

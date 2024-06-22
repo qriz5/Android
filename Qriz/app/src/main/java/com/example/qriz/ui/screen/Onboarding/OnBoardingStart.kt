@@ -1,5 +1,6 @@
 package com.example.qriz.ui.screen.Onboarding
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,12 +23,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.qriz.ui.navigation.main.Screens
 import com.example.qriz.ui.screen.component.CustomButton
 import com.example.qriz.ui.theme.QrizTheme
 import com.example.qriz.ui.theme.appleNeo
 
 @Composable
-fun OnBoardingStart() {
+fun OnBoardingStart(navController : NavController) {
     Surface (modifier = Modifier
         .fillMaxSize()
         .padding(16.dp)
@@ -39,7 +42,7 @@ fun OnBoardingStart() {
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(text = "선택하신 체크사항을 기반으로 모의고사 \n난이도를 맞춤으로 조정하여 제공해드려요!", fontFamily = appleNeo, fontWeight = FontWeight.Medium, fontSize = 16.sp, color = Color(0xFF747D8B))
             }
-            CustomButton(onClick = {}, text = "시작하기")
+            CustomButton(onClick = {navController.navigate(route = Screens.OnBoarding.name)}, text = "시작하기")
             Spacer(modifier = Modifier.height(40.dp))
         }
 
@@ -49,6 +52,6 @@ fun OnBoardingStart() {
 @Composable
 fun GreetingPreview() {
     QrizTheme {
-       OnBoardingStart()
+       OnBoardingStart(NavController(Application()))
     }
 }

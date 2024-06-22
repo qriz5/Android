@@ -1,5 +1,6 @@
 package com.example.qriz.ui.screen.Onboarding
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,12 +20,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.qriz.ui.navigation.main.Screens
 import com.example.qriz.ui.screen.component.CustomButton
 import com.example.qriz.ui.theme.QrizTheme
 import com.example.qriz.ui.theme.appleNeo
 
 @Composable
-fun OnBoardingFinish() {
+fun OnBoardingFinish(navController : NavController) {
     var name by remember { mutableStateOf("") }
     Surface (modifier = Modifier
         .fillMaxSize()
@@ -47,6 +50,6 @@ fun OnBoardingFinish() {
 @Composable
 fun OnBoardingFinishPreview() {
     QrizTheme {
-        OnBoardingFinish()
+        OnBoardingFinish(NavController(Application()))
     }
 }
