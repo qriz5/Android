@@ -70,11 +70,11 @@ fun MyPageScreen(){
                         .fillMaxWidth()
                         .padding(16.dp)) {
                     Text("고객센터", fontSize = 18.sp, fontFamily = appleNeo, fontWeight = FontWeight.Bold)
-                    MypageUserInformation("FAQ", R.drawable.baseline_square_24)
-                    MypageUserInformation("서비스 이용약관", R.drawable.baseline_square_24)
-                    MypageUserInformation("개인정보 처리방침", R.drawable.baseline_square_24)
-                    MypageUserInformation("버전정보", R.drawable.baseline_square_24)
-                    MypageUserInformation("공지사항", R.drawable.baseline_square_24)
+                    MyPageUserInformation("FAQ", R.drawable.baseline_square_24)
+                    MyPageUserInformation("서비스 이용약관", R.drawable.baseline_square_24)
+                    MyPageUserInformation("개인정보 처리방침", R.drawable.baseline_square_24)
+                    MyPageUserInformation("버전정보", R.drawable.baseline_square_24)
+                    MyPageUserInformation("공지사항", R.drawable.baseline_square_24)
 
 
                 }
@@ -106,7 +106,7 @@ fun MyPageMenuCard(text : String, ){
 }
 
 @Composable
-fun MypageUserInformation(text : String, icon : Int){
+fun MyPageUserInformation(text : String, icon : Int){
     Row(Modifier.fillMaxWidth().padding(vertical = 16.dp).clickable {  }){
         Image(painter = painterResource(id = icon), contentDescription = "$text")
         Text(modifier = Modifier.padding(start = 12.dp), text = "$text", fontSize = 16.sp, fontFamily = appleNeo, fontWeight = FontWeight.Medium)
